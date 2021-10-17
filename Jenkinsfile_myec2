@@ -1,0 +1,19 @@
+pipeline {
+    agent any
+    stages {
+        stage ('Checkout') {
+            steps {
+                git branch: 'main', url: 'git@github.com:Dia-sh/dev14-jks-pub.git'
+            }
+        }
+
+        stage ('CreateEnv') {
+            steps {
+                sh '''#!/bin/bash
+                        aws ec2 run-instances --image-id ami-02e136e904f3da870 --count 1 --instance-type t2.micro --key-name Dia --region us-east-1
+                '''
+            }
+        }
+    }
+
+}
