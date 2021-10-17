@@ -1,0 +1,32 @@
+  pipeline {
+    agent any
+
+    stages {
+        
+        stage('Checkout') {
+            steps {
+                 git branch: 'main', url: 'git@github.com:Dia-sh/dev14-jks-pub.git'
+            }
+        }
+
+        stage('TFInit') {
+            steps {
+                //terraform initialize
+                sh "terraform init"
+            }
+        }
+        stage('TFPlan') {
+            steps {
+                sh "terraform fmt"
+                sh "terraform plan"
+            }
+        }
+        stage('TFApply') {
+            steps {
+                sh "terraform apply -auto-approve"
+            }
+        }
+
+    }
+}
+
